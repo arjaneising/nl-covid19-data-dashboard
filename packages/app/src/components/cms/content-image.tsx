@@ -34,7 +34,7 @@ export function ContentImage({
   const ContentWrapper = contentWrapper ?? Fragment;
 
   return 'isFullWidth' in node && node.isFullWidth ? (
-    <Box bg="page" p={4}>
+    <Box bg="page" p={4} mb={3}>
       <MaxWidth textAlign="center">
         <Box
           as="figure"
