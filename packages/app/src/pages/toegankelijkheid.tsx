@@ -20,6 +20,7 @@ import {
 import { RichContentBlock } from '~/types/cms';
 
 const EuropeMapSimpleMaps = dynamic(
+  // @ts-expect-error
   () =>
     import('~/components/europe-map-simple-maps').then(
       (x) => x.EuropeMapSimpleMaps
@@ -28,6 +29,7 @@ const EuropeMapSimpleMaps = dynamic(
 );
 
 const EuropeMapLeaflet = dynamic(
+  // @ts-expect-error
   () =>
     import('~/components/europe-map-leaflet').then((x) => x.EuropeMapLeaflet),
   { ssr: false }
