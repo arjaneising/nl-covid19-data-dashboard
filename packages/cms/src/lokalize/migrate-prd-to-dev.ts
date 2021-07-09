@@ -48,9 +48,13 @@ import { LokalizeText } from './types';
    * delete that document to replace it with one from production stored under
    * the production document id.
    */
-  const chunks = chunk(allDevDraftTexts, 500);
+  const chunks = chunk(allPrdPublishedTexts, 500);
+
+  console.log('chunks', chunks.length);
 
   for (const docs of chunks) {
+    console.log(`Processing ${docs.length} documents`);
+
     const transaction = devClient.transaction();
 
     for (const doc of docs) {
