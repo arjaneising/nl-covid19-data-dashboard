@@ -1,5 +1,5 @@
 import { assert } from '@corona-dashboard/common';
-import { chunk, set } from 'lodash';
+import { chunk } from 'lodash';
 import { getClient } from '../client';
 import { LokalizeText } from './types';
 
@@ -41,7 +41,7 @@ import { LokalizeText } from './types';
 
   const devDocumentIdByKey = allDevPublishedTexts.reduce<
     Record<string, string>
-  >((acc, v) => set(acc, v.key, v._id), {});
+  >((acc, v) => ({ ...acc, [v.key]: v._id }), {});
 
   /**
    * For each production document, look up the equivalent key in development and
