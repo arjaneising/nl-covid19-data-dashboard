@@ -1,4 +1,3 @@
-import { Card, Container, Text } from '@sanity/ui';
 import React, { useState } from 'react';
 import { isDefined } from 'ts-is-present';
 import { Rule } from '~/sanity';

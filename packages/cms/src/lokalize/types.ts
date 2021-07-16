@@ -1,7 +1,6 @@
 export interface LokalizeText {
   _type: 'lokalizeText';
   _id: string;
-  path: string;
   subject: string;
   key: string;
   should_display_empty: boolean;
