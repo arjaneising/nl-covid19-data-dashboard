@@ -101,13 +101,13 @@ async function writePrettyJson(data: Record<string, unknown>, path: string) {
 }
 
 export async function generateTypes() {
-  const data = flatten(
+  const data = flatten<unknown, Record<string, string>>(
     JSON.parse(
       fs.readFileSync(path.join(localeDirectory, 'nl_export.json'), {
         encoding: 'utf-8',
       })
     )
-  ) as Record<string, string>;
+  );
 
   const textsFlat = removeIdsFromKeys(mapValues(data, () => '@string'));
 
@@ -127,7 +127,6 @@ export async function generateTypes() {
     `,
     { parser: 'typescript' }
   );
-
 
   return new Promise<void>((resolve, reject) =>
     fs.writeFile(

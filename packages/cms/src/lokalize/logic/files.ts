@@ -21,7 +21,7 @@ export async function readLocalTexts() {
 
 export async function readReferenceTexts() {
   /**
-   * @TODO Make is possible to choose the English file instead.
+   * @TODO Make it possible to choose the English file instead.
    */
   const referencePath = path.join(localeReferenceDirectory, 'nl_export.json');
 
