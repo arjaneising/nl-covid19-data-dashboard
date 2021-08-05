@@ -1,3 +1,4 @@
+import { curveStep, curveStepAfter, curveStepBefore } from '@visx/curve';
 import { LinePath } from '@visx/shape';
 import { Threshold } from '@visx/threshold';
 import { Property } from 'csstype';
@@ -49,6 +50,14 @@ export function StackedAreaTrend({
         y1={getY1}
         clipAboveTo={0}
         clipBelowTo={bounds.height}
+        //
+        //
+        //
+        curve={curveStep}
+        // curve={curveStepAfter}
+        // curve={curveStepBefore}
+        //
+        //
         belowAreaProps={{
           fill: color,
           fillOpacity,
