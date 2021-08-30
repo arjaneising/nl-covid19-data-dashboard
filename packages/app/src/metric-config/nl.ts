@@ -38,7 +38,12 @@ export const nl: NlConfig = {
       },
     },
   },
-
+  sewer: {
+    average: {
+      isDecimal: true,
+      isRounded: true,
+    },
+  },
   hospital_nice: {
     admissions_on_date_of_reporting: {
       isDecimal: true,

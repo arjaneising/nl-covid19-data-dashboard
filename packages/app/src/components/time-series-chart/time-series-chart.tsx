@@ -550,6 +550,7 @@ export function TimeSeriesChart<
           ))}
         </>
       )}
+
       {!disableLegend && legendItems && (
         <Box pl={paddingLeft}>
           <Legend items={legendItems} />

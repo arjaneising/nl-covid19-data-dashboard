@@ -2,7 +2,7 @@ import isSameDay from 'date-fns/isSameDay';
 import isToday from 'date-fns/isToday';
 import isYesterday from 'date-fns/isYesterday';
 import subDays from 'date-fns/subDays';
-import { isDefined } from 'ts-is-present';
+import { isDefined, isPresent } from 'ts-is-present';
 import { assert } from '~/utils';
 // TypeScript is missing some types for `Intl.DateTimeFormat`.
 // https://github.com/microsoft/TypeScript/issues/35865
@@ -69,8 +69,10 @@ export function createFormatting(
     value: number | string | undefined | null,
     numFractionDigits?: number
   ): string {
-    if (typeof value === 'undefined' || value === null) return '-';
-    const options = numFractionDigits
+    if (!isPresent(value)) return '-';
+
+    // numFractionDigits can be 0, specifically check for null or undefined
+    const options = isPresent(numFractionDigits)
       ? {
           maximumFractionDigits: numFractionDigits,
           minimumFractionDigits: numFractionDigits,

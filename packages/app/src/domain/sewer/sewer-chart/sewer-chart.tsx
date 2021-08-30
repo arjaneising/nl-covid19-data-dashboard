@@ -7,6 +7,8 @@ import { Box } from '~/components/base';
 import { ChartTile } from '~/components/chart-tile';
 import { Select } from '~/components/select';
 import { TimeSeriesChart } from '~/components/time-series-chart';
+import { TooltipSeriesList } from '~/components/time-series-chart/components/tooltip/tooltip-series-list';
+import { useIntl } from '~/intl';
 import { colors } from '~/style/theme';
 import { AccessibilityDefinition } from '~/utils/use-accessibility-annotations';
 import { LocationTooltip } from './components/location-tooltip';
@@ -63,6 +65,8 @@ export function SewerChart({
         ],
       } as SewerPerInstallationData)
   );
+
+  const { formatNumber } = useIntl();
 
   const averageSplitPoints = [
     {
@@ -164,6 +168,18 @@ export function SewerChart({
                   },
                 ]}
                 dataOptions={{ valueAnnotation: text.valueAnnotation }}
+                formatTooltip={(context) => (
+                  <TooltipSeriesList
+                    data={{
+                      ...context,
+                      metricPropertyFormatters: {
+                        ...context.metricPropertyFormatters,
+                        // round the average value in the tooltip
+                        average: (value) => formatNumber(value, 0),
+                      },
+                    }}
+                  />
+                )}
               />
             )
           }

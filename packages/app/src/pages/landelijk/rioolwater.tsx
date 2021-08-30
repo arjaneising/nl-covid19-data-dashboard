@@ -1,9 +1,10 @@
 import { Experimenteel, RioolwaterMonitoring } from '@corona-dashboard/icons';
-import { useState } from 'react';
+import { useCallback, useState } from 'react';
 import { RegionControlOption } from '~/components/chart-region-controls';
 import { DynamicChoropleth } from '~/components/choropleth';
 import { ChoroplethTile } from '~/components/choropleth-tile';
 import { thresholds } from '~/components/choropleth/logic/thresholds';
+import { ChoroplethTooltip } from '~/components/choropleth/tooltips';
 import { KpiTile } from '~/components/kpi-tile';
 import { KpiValue } from '~/components/kpi-value';
 import { PageInformationBlock } from '~/components/page-information-block';
@@ -46,7 +47,7 @@ export const getStaticProps = createGetStaticProps(
 );
 
 const SewerWater = (props: StaticProps<typeof getStaticProps>) => {
-  const { siteText } = useIntl();
+  const { siteText, formatNumber } = useIntl();
   const reverseRouter = useReverseRouter();
   const { selectedNlData: data, choropleth, content, lastGenerated } = props;
 
@@ -60,6 +61,23 @@ const SewerWater = (props: StaticProps<typeof getStaticProps>) => {
     title: text.metadata.title,
     description: text.metadata.description,
   };
+
+  const formatTooltip = useCallback(
+    (context) => (
+      <ChoroplethTooltip
+        data={{
+          ...context,
+          dataOptions: {
+            ...context.dataOptions,
+            tooltipVariables: {
+              average: formatNumber(context.dataItem.average, 0),
+            },
+          },
+        }}
+      />
+    ),
+    [formatNumber]
+  );
 
   return (
     <Layout {...metadata} lastGenerated={lastGenerated}>
@@ -104,6 +122,7 @@ const SewerWater = (props: StaticProps<typeof getStaticProps>) => {
                 absolute={sewerAverages.last_value.average}
                 valueAnnotation={siteText.waarde_annotaties.riool_normalized}
                 difference={data.difference.sewer__average}
+                maximumFractionDigits={0}
               />
             </KpiTile>
 
@@ -185,6 +204,7 @@ const SewerWater = (props: StaticProps<typeof getStaticProps>) => {
                 dataOptions={{
                   getLink: reverseRouter.gm.rioolwater,
                 }}
+                formatTooltip={formatTooltip}
               />
             ) : (
               <DynamicChoropleth
@@ -201,6 +221,7 @@ const SewerWater = (props: StaticProps<typeof getStaticProps>) => {
                 dataOptions={{
                   getLink: reverseRouter.vr.rioolwater,
                 }}
+                formatTooltip={formatTooltip}
               />
             )}
           </ChoroplethTile>

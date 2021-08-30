@@ -17,12 +17,14 @@ type SidebarKpiValueProps = {
   valueAnnotation?: string;
   difference?: DifferenceDecimal | DifferenceInteger;
   isPercentage?: boolean;
+  isRounded?: boolean;
 };
 
 export function SidebarKpiValue(props: SidebarKpiValueProps) {
   const {
     value,
     isPercentage,
+    isRounded,
     title,
     description,
     valueAnnotation,
@@ -30,6 +32,7 @@ export function SidebarKpiValue(props: SidebarKpiValueProps) {
   } = props;
 
   const { formatPercentage, formatNumber } = useIntl();
+  const numberFormatOptions = isRounded ? { maximumFractionDigits: 0 } : {};
 
   return (
     <Box width="100%" minHeight="4rem" spacing={2}>
@@ -43,7 +46,9 @@ export function SidebarKpiValue(props: SidebarKpiValueProps) {
       >
         {isDefined(value) && (
           <InlineText variant="h3">
-            {isPercentage ? `${formatPercentage(value)}%` : formatNumber(value)}
+            {isPercentage
+              ? `${formatPercentage(value, numberFormatOptions)}%`
+              : formatNumber(value, isRounded ? 0 : undefined)}
           </InlineText>
         )}
 

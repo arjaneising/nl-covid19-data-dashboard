@@ -182,6 +182,7 @@ export function SidebarMetric<T extends { difference: unknown }>({
         title={title}
         value={propertyValue}
         isPercentage={config.isPercentage}
+        isRounded={config.isRounded}
         description={description}
         difference={differenceValue}
         valueAnnotation={valueAnnotation}

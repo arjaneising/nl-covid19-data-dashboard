@@ -6,6 +6,7 @@
 export type MetricConfig = {
   isDecimal?: boolean;
   isPercentage?: boolean;
+  isRounded?: boolean;
   barScale?: BarScaleConfig;
 };
 

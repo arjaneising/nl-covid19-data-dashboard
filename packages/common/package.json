@@ -17,8 +17,7 @@
     "typecheck": "tsc --pretty --noEmit",
     "prebuild": "tsc -b .",
     "lint": "eslint 'src/**/*.{js,ts,tsx}'",
-    "format": "prettier --write \"src/**/*.{ts,tsx,md,json,yml}\" \"*.{js,json,md,yml}\" \"!src/types/data.ts\"",
-    "type-check": "tsc --pretty --noEmit"
+    "format": "prettier --write \"src/**/*.{ts,tsx,md,json,yml}\" \"*.{js,json,md,yml}\" \"!src/types/data.ts\""
   },
   "dependencies": {
     "geojson": "^0.5.0",

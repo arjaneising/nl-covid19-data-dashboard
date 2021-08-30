@@ -1,7 +1,7 @@
 import { DifferenceDecimal, DifferenceInteger } from '@corona-dashboard/common';
 import styled from 'styled-components';
 import { color } from 'styled-system';
-import { isDefined } from 'ts-is-present';
+import { isDefined, isPresent } from 'ts-is-present';
 import { Box } from '~/components/base';
 import {
   TileAverageDifference,
@@ -15,6 +15,7 @@ interface KpiValueProps {
   percentage?: number;
   valueAnnotation?: string;
   difference?: DifferenceDecimal | DifferenceInteger;
+  maximumFractionDigits?: number;
   text?: string;
   color?: string;
   isMovingAverageDifference?: boolean;
@@ -49,22 +50,29 @@ export function KpiValue({
   percentage,
   valueAnnotation,
   difference,
+  maximumFractionDigits,
   text,
   color = 'data.primary',
   isMovingAverageDifference,
   ...otherProps
 }: KpiValueProps) {
   const { formatPercentage, formatNumber } = useIntl();
+  const percentageFormatOptions = isPresent(maximumFractionDigits)
+    ? { maximumFractionDigits: 0 }
+    : {};
 
   return (
     <Box mb={3}>
       {isDefined(percentage) && isDefined(absolute) ? (
         <StyledValue color={color} {...otherProps}>
-          {`${formatNumber(absolute)} (${formatPercentage(percentage)}%)`}
+          {`${formatNumber(
+            absolute,
+            maximumFractionDigits
+          )} (${formatPercentage(percentage, percentageFormatOptions)}%)`}
         </StyledValue>
       ) : isDefined(percentage) ? (
         <StyledValue color={color} {...otherProps}>
-          {`${formatPercentage(percentage)}%`}
+          {`${formatPercentage(percentage, percentageFormatOptions)}%`}
         </StyledValue>
       ) : isDefined(text) ? (
         <StyledValue color={color} {...otherProps}>
@@ -72,7 +80,7 @@ export function KpiValue({
         </StyledValue>
       ) : (
         <StyledValue color={color} {...otherProps}>
-          {formatNumber(absolute)}
+          {formatNumber(absolute, maximumFractionDigits)}
         </StyledValue>
       )}
 
@@ -81,11 +89,13 @@ export function KpiValue({
           <TileAverageDifference
             value={difference}
             isPercentage={isDefined(percentage) && !isDefined(absolute)}
+            maximumFractionDigits={maximumFractionDigits}
           />
         ) : (
           <TileDifference
             value={difference}
             isPercentage={isDefined(percentage) && !isDefined(absolute)}
+            maximumFractionDigits={maximumFractionDigits}
           />
         ))}
       {valueAnnotation && <ValueAnnotation>{valueAnnotation}</ValueAnnotation>}

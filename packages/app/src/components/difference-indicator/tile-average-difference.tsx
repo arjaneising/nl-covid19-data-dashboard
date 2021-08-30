@@ -9,17 +9,20 @@ import { Container, IconContainer } from './containers';
 export function TileAverageDifference({
   value,
   isPercentage,
+  maximumFractionDigits,
 }: {
   value: DifferenceDecimal | DifferenceInteger;
   isPercentage?: boolean;
+  maximumFractionDigits?: number;
 }) {
   const { difference, old_value } = value;
   const { siteText, formatNumber } = useIntl();
 
   const oldValue = (
-    <InlineText fontWeight="bold">{` (${formatNumber(old_value)}${
-      isPercentage ? '%' : ''
-    })`}</InlineText>
+    <InlineText fontWeight="bold">{` (${formatNumber(
+      old_value,
+      maximumFractionDigits
+    )}${isPercentage ? '%' : ''})`}</InlineText>
   );
 
   if (difference > 0)
@@ -29,7 +32,8 @@ export function TileAverageDifference({
           <Up />
         </IconContainer>
         <InlineText fontWeight="bold">
-          {formatNumber(Math.abs(difference))} {siteText.toe_en_afname.hoger}{' '}
+          {formatNumber(Math.abs(difference), maximumFractionDigits)}{' '}
+          {siteText.toe_en_afname.hoger}{' '}
         </InlineText>
         <InlineText>
           {siteText.toe_en_afname.zeven_daags_gemiddelde}
@@ -45,7 +49,8 @@ export function TileAverageDifference({
           <Down />
         </IconContainer>
         <InlineText fontWeight="bold">
-          {formatNumber(Math.abs(difference))} {siteText.toe_en_afname.lager}{' '}
+          {formatNumber(Math.abs(difference), maximumFractionDigits)}{' '}
+          {siteText.toe_en_afname.lager}{' '}
         </InlineText>
         <InlineText>
           {siteText.toe_en_afname.zeven_daags_gemiddelde}

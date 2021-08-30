@@ -2,6 +2,7 @@ import { DifferenceDecimal, DifferenceInteger } from '@corona-dashboard/common';
 import { Gelijk } from '@corona-dashboard/icons';
 import { Up } from '@corona-dashboard/icons';
 import { Down } from '@corona-dashboard/icons';
+import { isPresent } from 'ts-is-present';
 import { InlineText } from '~/components/typography';
 import { useIntl } from '~/intl';
 import { Container, IconContainer } from './containers';
@@ -30,9 +31,9 @@ export function TileDifference({
   const differenceFormattedString = isDecimal
     ? formatPercentage(
         Math.abs(difference),
-        maximumFractionDigits ? { maximumFractionDigits } : undefined
+        isPresent(maximumFractionDigits) ? { maximumFractionDigits } : undefined
       )
-    : formatNumber(Math.abs(difference));
+    : formatNumber(Math.abs(difference), maximumFractionDigits);
 
   const timespanTextNode = showOldDateUnix
     ? formatDateFromSeconds(value.old_date_unix)
